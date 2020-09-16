@@ -7,10 +7,13 @@ MAINTAINER MarkusMcNugen
 
 VOLUME /downloads
 VOLUME /config
+VOLUME /theme
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN usermod -u 99 nobody
+
+
 
 # Update packages and install software
 RUN apt-get update \
@@ -24,6 +27,7 @@ RUN apt-get update \
 # Add configuration and scripts
 ADD openvpn/ /etc/openvpn/
 ADD qbittorrent/ /etc/qbittorrent/
+ADD theme/ /theme
 
 RUN chmod +x /etc/qbittorrent/*.sh /etc/qbittorrent/*.init /etc/openvpn/*.sh
 
