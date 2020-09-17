@@ -2,12 +2,10 @@
 #
 # Version 1.8
 
-FROM ubuntu:18.04
-MAINTAINER MarkusMcNugen
+FROM ubuntu:latest
 
 VOLUME /downloads
 VOLUME /config
-VOLUME /theme
 
 ENV DEBIAN_FRONTEND noninteractive
 
