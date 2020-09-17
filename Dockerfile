@@ -1,7 +1,4 @@
 # qBittorrent and OpenVPN
-#
-# Version 1.8
-
 FROM ubuntu:latest
 
 VOLUME /downloads
@@ -10,8 +7,6 @@ VOLUME /config
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN usermod -u 99 nobody
-
-
 
 # Update packages and install software
 RUN apt-get update \
@@ -25,7 +20,10 @@ RUN apt-get update \
 # Add configuration and scripts
 ADD openvpn/ /etc/openvpn/
 ADD qbittorrent/ /etc/qbittorrent/
-ADD theme/ /theme
+
+# Add the iQbit Theme
+RUN git clone https://github.com/ntoporcov/iQbit.git
+ADD iQbit/release/ /theme
 
 RUN chmod +x /etc/qbittorrent/*.sh /etc/qbittorrent/*.init /etc/openvpn/*.sh
 
