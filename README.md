@@ -1,37 +1,21 @@
-[preview]: https://raw.githubusercontent.com/MarkusMcNugen/docker-templates/master/qbittorrentvpn/Screenshot.png "qBittorrent Preview"
+# VueTorrent with OpenVPN
+Docker container which runs the latest headless qBittorrent client with WebUI VueTorrent while connecting to OpenVPN with iptables killswitch to prevent IP leakage when the tunnel goes down. This is an automated build linked with Ubuntu.
 
-# qBittorrent with WebUI and OpenVPN
-Docker container which runs the latest headless qBittorrent client with WebUI while connecting to OpenVPN with iptables killswitch to prevent IP leakage when the tunnel goes down. This is an automated build linked with Ubuntu.
+![Screenshot from the application on iPhone](screenshots/iPhone1.PNG)
+![Screenshot from the application on iPhone](screenshots/iPhone2.PNG)
+![Screenshot from the application on iPad](screenshots/iPad1.PNG)
+![Screenshot from the application on iPad](screenshots/iPad2.PNG)
 
-![alt text][preview]
 
 ## Docker Features
-* Base: Ubuntu 18.04
+* Base: Ubuntu
 * Latest qBittorrent
 * Size: 403MB
 * Selectively enable or disable OpenVPN support
 * IP tables kill switch to prevent IP leaking when VPN connection fails
 * Specify name servers to add to container
 * Configure UID, GID, and UMASK for config files and downloads by qBittorrent
-* WebUI\CSRFProtection set to false by default for Unraid users
 
-# Run container from Docker registry
-The container is available from the Docker registry and this is the simplest way to get it.
-To run the container use this command:
-
-```
-$ docker run --privileged  -d \
-              -v /your/config/path/:/config \
-              -v /your/downloads/path/:/downloads \
-              -v /your/theme/path/:/theme \
-              -e "VPN_ENABLED=yes" \
-              -e "LAN_NETWORK=192.168.1.0/24" \
-              -e "NAME_SERVERS=8.8.8.8,8.8.4.4" \
-              -p 8080:8080 \
-              -p 8999:8999 \
-              -p 8999:8999/udp \
-              markusmcnugen/qbittorrentvpn
-```
 
 # Variables, Volumes, and Ports
 ## Environment Variables
@@ -70,11 +54,6 @@ Access http://IPADDRESS:PORT from a browser on the same network.
 |`WebUI Username`| admin |
 |`WebUI Password`| adminadmin |
 
-## Origin header & Target origin mismatch
-WebUI\CSRFProtection must be set to false in qBittorrent.conf if using an unconfigured reverse proxy or forward request within a browser. This is the default setting unless changed. This file can be found in the dockers config directory in /qBittorrent/config
-
-## WebUI: Invalid Host header, port mismatch
-qBittorrent throws a [WebUI: Invalid Host header, port mismatch](https://github.com/qbittorrent/qBittorrent/issues/7641#issuecomment-339370794) error if you use port forwarding with bridge networking due to security features to prevent DNS rebinding attacks. If you need to run qBittorrent on different ports, instead edit the WEBUI_PORT_ENV and/or INCOMING_PORT_ENV variables AND the exposed ports to change the native ports qBittorrent uses.
 
 # How to use OpenVPN
 The container will fail to boot if `VPN_ENABLED` is set to yes or empty and a .ovpn is not present in the /config/openvpn directory. Drop a .ovpn file from your VPN provider into /config/openvpn and start the container again. You may need to edit the ovpn configuration file to load your VPN credentials from a file by setting `auth-user-pass`.
@@ -101,27 +80,3 @@ id <username>
 If you are having issues with this container please submit an issue on GitHub.
 Please provide logs, docker version and other information that can simplify reproducing the issue.
 Using the latest stable verison of Docker is always recommended. Support for older version is on a best-effort basis.
-
-# Building the container yourself
-To build this container, clone the repository and cd into it.
-
-## Build it:
-```
-$ cd /repo/location/qbittorrentvpn
-$ docker build -t qbittorrentvpn .
-```
-## Run it:
-```
-$ docker run --privileged  -d \
-              -v /your/config/path/:/config \
-              -v /your/downloads/path/:/downloads \
-              -e "VPN_ENABLED=yes" \
-              -e "LAN_NETWORK=192.168.1.0/24" \
-              -e "NAME_SERVERS=8.8.8.8,8.8.4.4" \
-              -p 8080:8080 \
-              -p 8999:8999 \
-              -p 8999:8999/udp \
-              qbittorrentvpn
-```
-
-This will start a container as described in the "Run container from Docker registry" section.
