@@ -23,7 +23,8 @@ ADD qbittorrent/ /etc/qbittorrent/
 
 # Add the iQbit Theme
 RUN git clone https://github.com/ntoporcov/iQbit.git
-ADD iQbit/release/ /theme
+RUN rm -rf /theme/*
+RUN cp iQbit/release/* /theme/
 
 RUN chmod +x /etc/qbittorrent/*.sh /etc/qbittorrent/*.init /etc/openvpn/*.sh
 
