@@ -1,12 +1,6 @@
 # VueTorrent with OpenVPN
 Docker container which runs the latest headless qBittorrent client with WebUI VueTorrent while connecting to OpenVPN with iptables killswitch to prevent IP leakage when the tunnel goes down. This is an automated build linked with Ubuntu.
 
-![Screenshot from the application on iPhone](screenshots/iPhone1.PNG)
-![Screenshot from the application on iPhone](screenshots/iPhone2.PNG)
-![Screenshot from the application on iPad](screenshots/iPad1.PNG)
-![Screenshot from the application on iPad](screenshots/iPad2.PNG)
-
-
 ## Docker Features
 * Base: Ubuntu
 * Latest qBittorrent
